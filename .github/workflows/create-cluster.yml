@@ -8,9 +8,11 @@ jobs:
     steps:
       - name: Kubernetes KinD Cluster
         uses: container-tools/kind-action@v1
+        with:
+          cluster_name: cluster
       - name: Testing
         run: |
-          kubectl cluster-info --context kind
+          kubectl cluster-info --context kind-cluster
           kubectl version
           kubectl get pods -n kube-system
           kubectl get nodes
