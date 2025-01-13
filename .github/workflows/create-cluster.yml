@@ -1,0 +1,16 @@
+name: Create Cluster
+
+on: pull_request
+
+jobs:
+  create-cluster:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Kubernetes KinD Cluster
+        uses: container-tools/kind-action@v1
+      - name: Testing
+        run: |
+          kubectl cluster-info --context kind
+          kubectl version
+          kubectl get pods -n kube-system
+          kubectl get nodes
