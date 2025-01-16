@@ -14,6 +14,7 @@ jobs:
         uses: appleboy/ssh-action@v1.2.0
         with:
           host: 192.168.202.19
+          username: root
           password: QwertY_13
           proxy_host: ${{ secrets.JUMP_IP }}
           proxy_port: ${{ secrets.JUMP_PORT }}
