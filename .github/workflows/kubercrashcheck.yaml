@@ -32,4 +32,6 @@ jobs:
           proxy_port: ${{ secrets.JUMP_PORT }}
           proxy_username: jump_sa
           proxy_password: ${{ secrets.JUMP_PW }}
-          script: kubectl cluster-info
+
+      - name: Test Kubernetes connection
+        run: kubectl cluster-info
