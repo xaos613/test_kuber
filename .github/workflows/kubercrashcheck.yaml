@@ -1,0 +1,22 @@
+name: remote ssh command
+on:
+  schedule:
+    - cron: '0/15 * * * *'
+  workflow_dispatch:
+
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: executing remote ssh commands using password
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: 192.168.202.19
+          password: QwertY_13
+          proxy_host: ${{ secrets.JUMP_IP }}
+          proxy_port: ${{ secrets.JUMP_PORT }}
+          proxy_username: jump_sa
+          proxy_password: ${{ secrets.JUMP_PW }}
+          script: whoami
