@@ -35,7 +35,7 @@ jobs:
           
 
       - name: open SSH tunnel
-        run: ssh -f -N -L 6443:127.0.0.1:6443 192.168.202.19
+        run: ssh -f -N -L 6443:127.0.0.1:6443 root@192.168.202.19
 
       - name: Test Kubernetes connection
         run: kubectl cluster-info
