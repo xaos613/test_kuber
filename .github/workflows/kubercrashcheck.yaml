@@ -24,7 +24,7 @@ jobs:
           proxy_port: ${{ secrets.JUMP_PORT }}
           proxy_username: jump_sa
           proxy_password: ${{ secrets.JUMP_PW }}
-          script: kubectl get pods -A | awk '{ print $2 }'> failed_pods.txt
+          script: kubectl get pods -A| grep -v NAME | awk '{ print $2 }' | awk '{ print $2 }'> failed_pods.txt
       
       - name: download
         uses: nicklasfrahm/scp-action@main
@@ -46,16 +46,12 @@ jobs:
         id: result
         run: |
           CONTENT=$(cat failed_pods.txt)
-          # Экранируем специальные символы для GitHub Actions
-          CONTENT="${CONTENT//'%'/'%25'}"
-          CONTENT="${CONTENT//$'\n'/' ,'}"
-          CONTENT="${CONTENT//$'\r'/'%0D'}"
+          CONTENT="${CONTENT//$'\n'/', '}"
           echo "file_content=$CONTENT" >> $GITHUB_OUTPUT
                 
       
       - name: Report to Slack
-        #if: steps.result.outputs.FAILED_PODS != ''
-           
+        if: steps.result.outputs.FAILED_PODS != ''
         uses: rtCamp/action-slack-notify@v2
         env:
           SLACK_CHANNEL: general
