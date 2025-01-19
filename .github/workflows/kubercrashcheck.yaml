@@ -46,6 +46,13 @@ jobs:
         id: result
         run: FAILED_PODS=$(cat ./failed_pods.txt) >> "$GITHUB_ENV"
 
+      - name: Read and Use Variable
+        run: |
+          MY_VARIABLE=$(cat ./failed_pods.txt)
+          echo "VARIANT 1. variable from file: $MY_VARIABLE"
+
+
+
       
       - name: Report to Slack
         #if: steps.result.outputs.FAILED_PODS != ''
