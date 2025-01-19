@@ -48,7 +48,7 @@ jobs:
 
       
       - name: Report to Slack
-        if: steps.result.outputs.FAILED_PODS != ''
+        #if: steps.result.outputs.FAILED_PODS != ''
         uses: rtCamp/action-slack-notify@v2
         env:
           SLACK_CHANNEL: general
