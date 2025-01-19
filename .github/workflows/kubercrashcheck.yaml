@@ -24,5 +24,18 @@ jobs:
           proxy_port: ${{ secrets.JUMP_PORT }}
           proxy_username: jump_sa
           proxy_password: ${{ secrets.JUMP_PW }}
-          script: kubectl get pods -A
-        
+          script: kubectl get pods -A > failed_pods.txt
+
+      - name: copy from server
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: 192.168.208.19
+          username: root
+          password: QwertY_13
+          proxy_host: ${{ secrets.JUMP_IP }}
+          proxy_port: ${{ secrets.JUMP_PORT }}
+          proxy_username: jump_sa
+          proxy_password: ${{ secrets.JUMP_PW }}
+          source: "/root/failed_pods.txt"
+          target: "./failed_pods.txt"
+          
