@@ -30,6 +30,7 @@ jobs:
         uses: nicklasfrahm/scp-action@main
         with:
           direction: download
+          insecure_ignore_fingerprint: true
           host: 192.168.208.19
           insecure_password: QwertY_13
           username: root
