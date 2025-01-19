@@ -1,28 +1,44 @@
-name: remote ssh command
-on:
-  #schedule:
-  #  - cron: '0 * * * *'
-  workflow_dispatch: 
+name: Check status of pods
 
+on:
+  push:
+    branches:
+      - 10-kubernetes-installation
+      - master
 
 jobs:
-  build:
-    name: Build
+  check-pods-status:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-      
-      
-      - name: executing remote ssh commands using password
+      - uses: actions/checkout@v4
+      - name: Check status of pods
+        id: pods-status
         uses: appleboy/ssh-action@v1.2.0
         with:
-          host: 192.168.202.19
-          username: root
-          password: QwertY_13
-          proxy_host: ${{ secrets.JUMP_IP }}
-          proxy_port: ${{ secrets.JUMP_PORT }}
-          proxy_username: jump_sa
-          proxy_password: ${{ secrets.JUMP_PW }}
-          script: kubectl get pods -A
-        
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.KEY }}
+          proxy_host: ${{ secrets.PROXY_HOST }}
+          proxy_port: ${{ secrets.PROXY_PORT }}
+          proxy_username: ${{ secrets.PROXY_USERNAME }}
+          proxy_password: ${{ secrets.PROXY_KEY }}
+          script: |
+            FAILED_PODS=`kubectl get pods -A | awk '$4!="Running" && $4!="Succeeded" { print $2 }' | tail +2`
+            echo "$FAILED_PODS" > failed_pods.txt
+
+      - name: Copy file
+        uses: nicklasfrahm/scp-action@main
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          insecure_ignore_fingerprint: true
+          proxy_host: ${{ secrets.PROXY_HOST }}
+          proxy_port: ${{ secrets.PROXY_PORT }}
+          proxy_username: ${{ secrets.PROXY_USERNAME }}
+          proxy_key: ${{ secrets.PROXY_SSH_KEY }}
+          proxy_fingerprint: true
+          insecure_proxy_ignore_fingerprint: true
+          direction: download
+          source: "/root/failed_pods.txt"
+          target: "./failed_pods.txt"
