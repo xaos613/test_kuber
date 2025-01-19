@@ -1,18 +1,20 @@
-name: Check status of pods
-
+name: remote ssh command
 on:
-  push:
-    branches:
-      - 10-kubernetes-installation
-      - master
+  #schedule:
+  #  - cron: '0 * * * *'
+  workflow_dispatch: 
+
 
 jobs:
-  check-pods-status:
+  build:
+    name: Build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: Check status of pods
-        id: pods-status
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      
+      - name: executing remote ssh commands using password
         uses: appleboy/ssh-action@v1.2.0
         with:
           host: 192.168.202.19
@@ -22,23 +24,5 @@ jobs:
           proxy_port: ${{ secrets.JUMP_PORT }}
           proxy_username: jump_sa
           proxy_password: ${{ secrets.JUMP_PW }}
-          script: |
-            FAILED_PODS=`kubectl get pods -A | awk '$4!="Running" && $4!="Succeeded" { print $2 }' | tail +2`
-            echo "$FAILED_PODS" > failed_pods.txt
-
-      - name: Copy file
-        uses: nicklasfrahm/scp-action@main
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.SSH_KEY }}
-          insecure_ignore_fingerprint: true
-          proxy_host: ${{ secrets.PROXY_HOST }}
-          proxy_port: ${{ secrets.PROXY_PORT }}
-          proxy_username: ${{ secrets.PROXY_USERNAME }}
-          proxy_key: ${{ secrets.PROXY_SSH_KEY }}
-          proxy_fingerprint: true
-          insecure_proxy_ignore_fingerprint: true
-          direction: download
-          source: "/root/failed_pods.txt"
-          target: "./failed_pods.txt"
+          script: kubectl get pods -A
+        
