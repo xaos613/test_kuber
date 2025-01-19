@@ -24,7 +24,7 @@ jobs:
           proxy_port: ${{ secrets.JUMP_PORT }}
           proxy_username: jump_sa
           proxy_password: ${{ secrets.JUMP_PW }}
-          script: ECHO 111 > failed_pods.txt
+          script: echo 111 > failed_pods.txt
       
       - name: download
         uses: nicklasfrahm/scp-action@main
