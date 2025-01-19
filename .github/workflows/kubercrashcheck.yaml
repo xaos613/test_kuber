@@ -37,5 +37,5 @@ jobs:
           proxy_username: jump_sa
           proxy_password: ${{ secrets.JUMP_PW }}
           source: "/root/failed_pods.txt"
-          target: ./
+          target: /root/
           
