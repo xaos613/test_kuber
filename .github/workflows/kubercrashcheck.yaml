@@ -45,12 +45,13 @@ jobs:
       - name: variable
         id: result
         run: |
-          FAILED_PODS=$(cat ./failed_pods.txt) >> $GITHUB_OUTPUT
+          FAILED_PODS=$(cat ./failed_pods.txt) > $GITHUB_OUTPUT
           echo $FAILED_PODS
       
       
       - name: Report to Slack
         #if: steps.result.outputs.FAILED_PODS != ''
+           
         uses: rtCamp/action-slack-notify@v2
         env:
           SLACK_CHANNEL: general
@@ -59,3 +60,4 @@ jobs:
           SLACK_TITLE: Some pods have failed
           SLACK_USERNAME: xaos613
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        
