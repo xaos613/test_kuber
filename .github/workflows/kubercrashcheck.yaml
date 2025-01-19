@@ -38,5 +38,6 @@ jobs:
           proxy_port: ${{ secrets.JUMP_PORT }}
           proxy_username: jump_sa
           insecure_proxy_password: ${{ secrets.JUMP_PW }}
+          insecure_proxy_ignore_fingerprint: true
           source: /root/failed_pods.txt
           target: .  
