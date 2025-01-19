@@ -49,7 +49,7 @@ jobs:
         #if: steps.result.outputs.FAILED_PODS != ''
         uses: rtCamp/action-slack-notify@v2
         env:
-          SLACK_CHANNEL: app
+          SLACK_CHANNEL: general
           SLACK_COLOR: failure
           SLACK_MESSAGE: "List of fallen pods:"
           SLACK_TITLE: Some pods have failed
