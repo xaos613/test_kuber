@@ -54,7 +54,6 @@ jobs:
           SLACK_CHANNEL: general
           SLACK_COLOR: failure
           SLACK_MESSAGE: "List of fallen pods:${{ steps.result.outputs.FAILED_PODS }}"
-          SLACK_FILE_UPLOAD: ./failed_pods.txt
           SLACK_TITLE: Some pods have failed
           SLACK_USERNAME: xaos613
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
