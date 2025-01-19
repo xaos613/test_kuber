@@ -1,7 +1,7 @@
 name: remote ssh command
 on:
-  #schedule:
-  #  - cron: '0 * * * *'
+  schedule:
+    - cron: '0 * * * *'
   workflow_dispatch: 
 
 
@@ -24,7 +24,7 @@ jobs:
           proxy_port: ${{ secrets.JUMP_PORT }}
           proxy_username: jump_sa
           proxy_password: ${{ secrets.JUMP_PW }}
-          script: kubectl get pods -A| grep -v NAME | awk '{ print $2 }'> failed_pods.txt
+          script: kubectl get pods -A| grep -v Running | grep -v NAME | awk '{ print $2 }'> failed_pods.txt
       
       - name: download
         uses: nicklasfrahm/scp-action@main
