@@ -42,13 +42,13 @@ jobs:
           source: /root/failed_pods.txt
           target: ./failed_pods.txt
 
-      #- name: variable
-      #  run: |
-      #    {
-      #      echo 'FAILED_PODS<<EOF'
-      #      "FAILED_PODS=$(cat ./failed_pods.txt)"
-      #      echo EOF
-      #    } >> "$GITHUB_ENV"
+      - name: variable
+        run: |
+          FAILED_PODS=
+          { "
+            $(cat ./failed_pods.txt)
+            "
+          } >> "$GITHUB_ENV"
 
 
 
