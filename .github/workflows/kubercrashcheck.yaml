@@ -24,7 +24,7 @@ jobs:
           proxy_port: ${{ secrets.JUMP_PORT }}
           proxy_username: jump_sa
           proxy_password: ${{ secrets.JUMP_PW }}
-          script: kubectl get pods -A| grep -v NAME | awk '{ print $2 }' | awk '{ print $2 }'> failed_pods.txt
+          script: kubectl get pods -A| grep -v NAME | awk '{ print $2 }'> failed_pods.txt
       
       - name: download
         uses: nicklasfrahm/scp-action@main
@@ -52,7 +52,7 @@ jobs:
                 
       
       - name: Report to Slack
-#        if: steps.result.outputs.file_content != ''
+        if: steps.result.outputs.file_content != ''
         uses: rtCamp/action-slack-notify@v2
         env:
           SLACK_CHANNEL: general
