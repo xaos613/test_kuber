@@ -56,11 +56,14 @@ jobs:
       
       - name: Report to Slack
         #if: steps.result.outputs.FAILED_PODS != ''
+        run: |
+          MY_VARIABLE=$(cat ./failed_pods.txt)
+          echo "VARIANT 1. variable from file: $MY_VARIABLE"
         uses: rtCamp/action-slack-notify@v2
         env:
           SLACK_CHANNEL: general
           SLACK_COLOR: failure
-          SLACK_MESSAGE: "List of fallen pods:${{ steps.result.outputs.FAILED_PODS }}"
+          SLACK_MESSAGE: "List of fallen pods:$MY_VARIABLE}}"
           SLACK_TITLE: Some pods have failed
           SLACK_USERNAME: xaos613
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
