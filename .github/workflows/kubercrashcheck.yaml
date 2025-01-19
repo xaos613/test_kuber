@@ -47,9 +47,9 @@ jobs:
         run: |
           CONTENT=$(cat failed_pods.txt)
           # Экранируем специальные символы для GitHub Actions
-          CONTENT="${CONTENT//'%'/'%25'}"
-          CONTENT="${CONTENT//$'\n'/'%0A'}"
-          CONTENT="${CONTENT//$'\r'/'%0D'}"
+          #CONTENT="${CONTENT//'%'/'%25'}"
+          #CONTENT="${CONTENT//$'\n'/'%0A'}"
+          #CONTENT="${CONTENT//$'\r'/'%0D'}"
           echo "file_content=$CONTENT" >> $GITHUB_OUTPUT
                 
       
