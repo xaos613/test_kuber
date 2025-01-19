@@ -43,11 +43,9 @@ jobs:
           target: ./failed_pods.txt
 
       - name: variable
+        id: result
         run: FAILED_PODS=$(cat ./failed_pods.txt) >> "$GITHUB_ENV"
 
-
-
-        
       
       - name: Report to Slack
         if: steps.result.outputs.FAILED_PODS != ''
