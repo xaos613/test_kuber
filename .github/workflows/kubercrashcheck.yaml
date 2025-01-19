@@ -25,6 +25,8 @@ jobs:
           proxy_username: jump_sa
           proxy_password: ${{ secrets.JUMP_PW }}
           script: |
-            kubectl get pods -A
+            FAILED_PODS=`kubectl get pods -A | awk '$4!="Running" && $4!="Succeeded" { print $2 }' | tail +2`
+            echo "$FAILED_PODS" > failed_pods.txt
+
                     
   
