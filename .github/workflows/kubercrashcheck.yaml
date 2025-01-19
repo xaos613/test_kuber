@@ -40,4 +40,4 @@ jobs:
           insecure_proxy_password: ${{ secrets.JUMP_PW }}
           insecure_proxy_ignore_fingerprint: true
           source: /root/failed_pods.txt
-          target: .  
+          target: ./failed_pods.txt
