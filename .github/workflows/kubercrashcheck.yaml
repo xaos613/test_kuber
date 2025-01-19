@@ -1,8 +1,7 @@
 name: remote ssh command
 on:
   schedule:
-    - cron: '0 * * * *'
-  workflow_dispatch:
+  workflow_dispatch: #  - cron: '0 * * * *'
 
 
 jobs:
@@ -13,22 +12,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
       
-      - name: Install jq and sshpass
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y sshpass
-
       
-      
-      - name: Set up kubectl
-        uses: azure/setup-kubectl@v4
-        id: kubectl
-
-      - name: add kube config
-        run: |
-          mkdir -p $HOME/.kube
-          echo "${{ secrets.KUBECONFIG }}" > $HOME/.kube/config
-    
       - name: executing remote ssh commands using password
         uses: appleboy/ssh-action@v1.2.0
         with:
@@ -39,8 +23,6 @@ jobs:
           proxy_port: ${{ secrets.JUMP_PORT }}
           proxy_username: jump_sa
           proxy_password: ${{ secrets.JUMP_PW }}
+          script: kubectl get pods -A | grep Running
                     
-      - name: Test Kubernetes connection
-        run: |
-          ip a
-          kubectl cluster-info
+  
