@@ -43,7 +43,7 @@ jobs:
           target: ./failed_pods.txt
 
       - name: Testing
-        run: echo "FAILED_PODS=$(cat ./failed_pods.txt)" >> $GITHUB_OUTPUT
+        run: echo "FAILED_PODS=$(cat ./failed_pods.txt)"
       
       - name: Report to Slack
         if: steps.result.outputs.FAILED_PODS != ''
