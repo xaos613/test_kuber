@@ -51,7 +51,7 @@ jobs:
                 
       
       - name: Report to Slack
-        if: steps.result.outputs.file_content != ''
+#        if: steps.result.outputs.file_content != ''
         uses: rtCamp/action-slack-notify@v2
         env:
           SLACK_CHANNEL: general
