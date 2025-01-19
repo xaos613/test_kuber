@@ -45,7 +45,7 @@ jobs:
       - name: variable
         id: result
         run: |
-          FAILED_PODS=$(cat ./failed_pods.txt) > $GITHUB_OUTPUT
+          FAILED_PODS=$(cat ./failed_pods.txt) > "$GITHUB_OUTPUT"
           echo $FAILED_PODS
       
       
