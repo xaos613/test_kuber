@@ -44,7 +44,9 @@ jobs:
 
       - name: variable
         id: result
-        run: FAILED_PODS=$(cat ./failed_pods.txt)
+        run: |
+          FAILED_PODS=$(cat ./failed_pods.txt)
+          echo $FAILED_PODS
       
       
       - name: Report to Slack
