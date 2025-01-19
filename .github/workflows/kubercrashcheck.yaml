@@ -25,6 +25,6 @@ jobs:
           proxy_username: jump_sa
           proxy_password: ${{ secrets.JUMP_PW }}
           script: |
-            ip a
+            kubectl get pods -A
                     
   
