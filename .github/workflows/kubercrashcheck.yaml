@@ -24,7 +24,7 @@ jobs:
           proxy_port: ${{ secrets.JUMP_PORT }}
           proxy_username: jump_sa
           proxy_password: ${{ secrets.JUMP_PW }}
-          script: kubectl get pods -A > failed_pods.txt
+          script: kubectl get pods -A | awk '{ print $2 }'> failed_pods.txt
       
       - name: download
         uses: nicklasfrahm/scp-action@main
@@ -47,9 +47,9 @@ jobs:
         run: |
           CONTENT=$(cat failed_pods.txt)
           # Экранируем специальные символы для GitHub Actions
-          #CONTENT="${CONTENT//'%'/'%25'}"
-          #CONTENT="${CONTENT//$'\n'/'%0A'}"
-          #CONTENT="${CONTENT//$'\r'/'%0D'}"
+          CONTENT="${CONTENT//'%'/'%25'}"
+          CONTENT="${CONTENT//$'\n'/'%0A'}"
+          CONTENT="${CONTENT//$'\r'/'%0D'}"
           echo "file_content=$CONTENT" >> $GITHUB_OUTPUT
                 
       
