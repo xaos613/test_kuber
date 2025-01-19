@@ -48,6 +48,7 @@ jobs:
           CONTENT=$(cat failed_pods.txt)
           CONTENT="${CONTENT//$'\n'/', '}"
           echo "file_content=$CONTENT" >> $GITHUB_OUTPUT
+          echo $GITHUB_OUTPUT
                 
       
       - name: Report to Slack
